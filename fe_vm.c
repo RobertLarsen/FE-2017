@@ -205,7 +205,7 @@ void execute(uint8_t * disk) {
 }
 
 int main(int argc, char *argv[]) {
-    int fd;
+    int fd, len;
     struct stat st;
     void * disk;
 
@@ -237,6 +237,11 @@ int main(int argc, char *argv[]) {
 
             free(disk);
         }
+    } else {
+        fprintf(stderr, "%s %n<infile> [outfile]\n", argv[0], &len);
+        fprintf(stderr, "%*sinfile  - Bytecode to execute\n", len, "");
+        fprintf(stderr, "%*soutfile - File to write modified infile to\n", len, "");
+        fprintf(stderr, "Setting environment variable \"DEBUG\" to \"true\" makes %s output a runtrace.\n", argv[0]);
     }
     
     return 0;
