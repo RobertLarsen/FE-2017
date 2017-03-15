@@ -287,7 +287,6 @@ NO_MORE_SECTORS:                                                                
 040c   MOVI  r57, 0x200
 0410   DIV   r21, r11, r57
 0414   MOVI  r58, 0xe00
-0418   op_write not implemented
 0418   WRITE MEM[r58], DISK[r21]
 0464   MOVI  r57, 0xa537
 0468   MOVI  r21, 0xffff0000
