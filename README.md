@@ -47,6 +47,10 @@ sort -u < runtrace.asm >disassembly.asm
 
 Performs a plain text attack on the crypto used by the bytecode.
 
-## reversed.txt
+## disk.img.asm
 
 Commented disassembly of the code behind the disk.img
+
+## web.img.asm
+
+Commented disassembly of the code behind the web.img
