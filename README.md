@@ -14,6 +14,10 @@ A longer version could be retrieved from an onion address which is down now howe
 
 Bytecode for the VM. This is the long version retrieved from the onion server.
 
+## vm.asm
+
+Original (but commented) assembly from the picture.
+
 ## fe_vm.c
 
 My implementation of the VM which is begun on the left of the picture.
