@@ -12,3 +12,6 @@ fe_vm: fe_vm.c
 .phony: run
 run: fe_vm
 	./fe_vm decoded.bin
+
+fuzz: fe_vm.c
+	clang++ -DFUZZER -g -fsanitize=address -fsanitize-coverage=trace-pc-guard -o $@ $^ /usr/lib/llvm-4.0/lib/libFuzzer.a
