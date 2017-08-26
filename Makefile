@@ -1,4 +1,4 @@
-CFLAGS=-Wall
+CFLAGS=-Wall -ggdb
 
 .phony: all
 all: fe_vm pta
