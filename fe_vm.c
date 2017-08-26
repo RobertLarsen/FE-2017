@@ -113,7 +113,11 @@ int op_mul(instruction_t * instruction, vm_t * vm) {
 
 int op_div(instruction_t * instruction, vm_t * vm) {
     DEBUG("DIV   r%d, r%d, r%d\n", ARG1, ARG2, ARG3);
-    REG(ARG1) = REG(ARG2) / REG(ARG3);
+    if (REG(ARG3) == 0) {
+        return 1;
+    } else {
+        REG(ARG1) = REG(ARG2) / REG(ARG3);
+    }
     return 0;
 }
 
@@ -159,7 +163,7 @@ int op_out(instruction_t * instruction, vm_t * vm) {
 int op_read(instruction_t * instruction, vm_t * vm) {
     DEBUG("READ  MEM[r%d], DISK[r%d]\n", ARG1, ARG2);
     if (vm->disk_size < REG(ARG2) * 512 + 512) {
-        fprintf(stderr, "Disk size exceeded");
+        fprintf(stderr, "Disk size exceeded\n");
         return 1;
     }
     memcpy(&vm->memory[REG(ARG1)], &vm->disk[REG(ARG2) * 512], 512);
@@ -169,7 +173,7 @@ int op_read(instruction_t * instruction, vm_t * vm) {
 int op_write(instruction_t * instruction, vm_t * vm) {
     DEBUG("WRITE MEM[r%d], DISK[r%d]\n", ARG1, ARG2);
     if (vm->disk_size < REG(ARG2) * 512 + 512) {
-        fprintf(stderr, "Disk size exceeded");
+        fprintf(stderr, "Disk size exceeded\n");
         return 1;
     }
     memcpy(&vm->disk[REG(ARG2) * 512], &vm->memory[REG(ARG1)], 512);
