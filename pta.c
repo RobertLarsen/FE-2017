@@ -5,6 +5,7 @@
 #include <ctype.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <sys/time.h>
 #include <fcntl.h>
 #include <unistd.h>
 
@@ -110,24 +111,32 @@ uint8_t cipher[] =
 "\x5a\xf7\x4c\x29\x85\xde\x87\x14";
 
 int main(int argc, char *argv[]) {
+    struct itimerval timer = {
+        .it_interval = {
+            .tv_usec = 200000,
+        },
+        .it_value = {
+            .tv_sec = 1,
+        }
+    };
     password_iterator_t ite;
 
     pw_init(&ite, ALPHABET);
     signal(SIGALRM, handle_alarm);
-    alarm(1);
+    setitimer(ITIMER_REAL, &timer, NULL);
     while (pw_iterate(&ite)) {
         count++;
         if (print_password) {
             print_password = 0;
-            printf("%d  %s\n", count, ite.password);
+            printf("\r%d  %s", count, ite.password);
+            fflush(stdout);
             count = 0;
-            alarm(1);
         }
         if (test_password(ite.password, plain, cipher)) {
-            printf("Password: %s\n", ite.password);
+            printf("\rPassword: %s\n", ite.password);
             break;
         }
     }
-    
+
     return 0;
 }
